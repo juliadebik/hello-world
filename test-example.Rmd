@@ -1,15 +1,29 @@
 ---
 title: "test-example"
-output: html_document
+output:
+  rmarkdown::html_document:
+    theme: simplex
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Generalized Linear Mixed Models
+### Linear Mixed Models  
+Linear predictor contains randoom effects in addition to the usual fixed effects. 
 
-* Linear predictor contains randoom effects in addition to the usual fixed effects.
+$$ Y_{ij} = \beta_0 + \beta_1 x_{ij} + \gamma_{0i} + \varepsilon_{ij}$$
+Here $\gamma_{0i}$ is a cluster-specific parameter.
 
-* Analysis of grouped data as the difference between the groups can be modelled as a random effect.
-* Analysis of longitudinal data (repeated observations of the same variable).
+  * Grouped/clustered data: the data er nested.
+  * Longitudinal data: repeated observations of the same variable.
+  
+```{r}
+library(lme4)
+
+fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+summary(fm1)
+```
+  
+    
